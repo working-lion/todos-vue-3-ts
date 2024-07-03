@@ -12,22 +12,22 @@ const router = createRouter({
     {
       path: '/add',
       name: 'add-view',
-      component: () => import('../views/AddView.vue'),
+      component: () => import('@/views/AddView.vue'),
     },
     {
       path: '/view',
       name: 'note-view',
-      component: () => import('../views/NoteView.vue'),
+      component: () => import('@/views/NoteView.vue'),
     },
     {
       path: '/edit/:id',
       name: 'edit-view',
-      component: () => import('../views/EditView.vue'),
+      component: () => import('@/views/EditView.vue'),
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
-      component: () => import('../views/NotFound.vue'),
+      component: () => import('@/views/NotFound.vue'),
     },
   ],
 });
