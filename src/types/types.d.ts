@@ -7,6 +7,6 @@ interface Task {
 interface Note {
   id: number;
   title: string;
-  tasks: Array<Task>;
+  tasks?: Array<Task>;
   createdAt: string;
 }
