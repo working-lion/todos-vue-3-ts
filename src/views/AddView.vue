@@ -1,11 +1,32 @@
 <template>
-  <AddNote @add="add" />
+  <Header title="Добавление новой заметки">
+    <RouterLink to="/" />
+  </Header>
+
+  <AddNoteForm
+    @add="addNote"
+    @chancel="toHome"
+  />
 </template>
 
 <script setup lang="ts">
-import AddNote from '@/components/AddNote.vue';
+import router from '@/router';
+import { RouterLink } from 'vue-router';
 
-const add = (note) => {
-  console.dir(note);
+import Header from '@/components/Header.vue';
+import AddNoteForm from '@/components/AddNoteForm.vue';
+
+import { useNotesStore } from '@/stores/notes';
+
+const toHome = () => {
+  router.push({ name: 'home' });
+};
+
+const addNote = (note: Note) => {
+  const notesStore = useNotesStore();
+
+  notesStore.add(note);
+
+  toHome();
 };
 </script>
