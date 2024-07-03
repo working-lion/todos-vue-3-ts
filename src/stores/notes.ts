@@ -1,52 +1,51 @@
 import { defineStore } from 'pinia';
+import { reactive, ref } from 'vue';
 
-interface NotesState {
-  count: number;
-  notes: Array<Note>;
-}
+import { saveToStorage, getFromStorage } from '@/localStorage/localStorage';
 
-export const useNotesStore = defineStore('notes', {
-  state: () => {
-    return {
-      count: 0,
-      notes: [],
-    };
-  },
+export const useNotesStore = defineStore('notes', () => {
+  const notesFromStorage = getFromStorage();
 
-  getters: {
-    notes(state: NotesState) {
-      return state.notes;
-    },
-  },
+  const count = ref(0);
+  const notes: Array<Note> = reactive(notesFromStorage);
 
-  actions: {
-    getCount() {
-      this.count++;
+  const getNewNoteId = () => {
+    count.value += 1;
 
-      return this.count;
-    },
+    return count.value;
+  };
 
-    add(note: Note) {
-      this.notes.push(note);
-    },
+  const add = (note: Note) => {
+    // TODO: проставление id было бы правильнее делать тут
+    if (note.id && note.title) {
+      notes.push(note);
 
-    remove(noteId: number) {
-      this.notes.filter((note) => note.id !== noteId);
-    },
-  },
-});
+      saveToStorage(notes);
+    }
+  };
 
-/*
-*
-* const notes: Array<Note> = ref([])
+  const remove = (noteId: number) => {
+    const noteIndex = notes.findIndex((note) => note.id === noteId);
 
-  function add(note: Note) {
-    notes.value.push(note)
-  }
+    notes.splice(noteIndex, 1);
+
+    saveToStorage(notes);
+  };
+
+  const edit = (note: Note) => {
+    const noteIndex = notes.findIndex((n) => n.id === note.id);
+
+    // TODO: тесты
+    notes[noteIndex] = note;
+
+    saveToStorage(notes);
+  };
 
   return {
     notes,
+    getNewNoteId,
     add,
-  }
-*
-* */
+    remove,
+    edit,
+  };
+});
