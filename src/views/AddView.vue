@@ -1,7 +1,8 @@
 <template>
-  <Header title="Добавление новой заметки">
-    <RouterLink to="/" />
-  </Header>
+  <teleport to="#header-title">Добавление новой заметки</teleport>
+  <teleport to="#header-navigation">
+    <LinkHome />
+  </teleport>
 
   <AddNoteForm
     @add="addNote"
@@ -11,12 +12,11 @@
 
 <script setup lang="ts">
 import router from '@/router';
-import { RouterLink } from 'vue-router';
 
-import Header from '@/components/Header.vue';
-import AddNoteForm from '@/components/AddNoteForm.vue';
+import AddNoteForm from '@/components/forms/AddNoteForm.vue';
 
 import { useNotesStore } from '@/stores/notes';
+import LinkHome from '@/components/links/LinkHome.vue';
 
 const toHome = () => {
   router.push({ name: 'home' });
@@ -24,6 +24,8 @@ const toHome = () => {
 
 const addNote = (note: Note) => {
   const notesStore = useNotesStore();
+
+  // TODO: валидация
 
   notesStore.add(note);
 
