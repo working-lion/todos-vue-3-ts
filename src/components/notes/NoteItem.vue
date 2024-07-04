@@ -1,31 +1,44 @@
 <template>
   <div class="note-item">
-    <div class="note-item__title">{{ note.title }}</div>
-    <div class="note-item__tasks">
-      <div
+    <RouterLink
+      class="note-item__title"
+      :to="`/note/${noteId}`"
+      >{{ note.title }}</RouterLink
+    >
+    <ul class="note-item__tasks">
+      <li
         class="note-item__task"
-        v-for="task in note.tasks"
+        v-for="task in tasks"
         :key="task.createdAt"
       >
         {{ task.title }} - {{ task.createdAt }}
-      </div>
-    </div>
+      </li>
+      <li v-if="isMore">...</li>
+    </ul>
     <Actions>
-      <Button @click="edit">Редактировать</Button>
+      <VLink :link="`/edit/${noteId}`">Редактировать</VLink>
       <Button @click="remove">Удалить</Button>
     </Actions>
   </div>
 </template>
 
 <script setup lang="ts">
-import Actions from '@/components/ui/Actions.vue';
-import Button from '@/components/ui/Button.vue';
+import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
 
 import { useNotesStore } from '@/stores/notes';
+
+import Actions from '@/components/ui/VActions.vue';
+import Button from '@/components/ui/VButton.vue';
+import VLink from '@/components/ui/VLink.vue';
+
+import { sortByDate } from '@/utils/notes';
 
 interface Props {
   note: Note;
 }
+
+const TASKS_COUNT_SHOWN = 3;
 
 const props = defineProps<Props>();
 
@@ -35,9 +48,22 @@ const remove = () => {
   notesStore.remove(props.note.id);
 };
 
-const edit = () => {
-  console.log('editNote');
-};
+const noteId = computed(() => props.note.id);
+
+const tasks = computed(() => {
+  return props.note.tasks
+    ?.filter((t) => !t.done)
+    .sort(sortByDate)
+    .slice(0, TASKS_COUNT_SHOWN);
+});
+
+const isMore = computed(() => {
+  if (!props.note.tasks) {
+    return false;
+  }
+
+  return props.note.tasks.filter((t) => !t.done)?.length > TASKS_COUNT_SHOWN;
+});
 </script>
 
 <style>
@@ -49,9 +75,5 @@ const edit = () => {
 
 .note-item__title {
   margin-bottom: 16px;
-}
-
-.note-item__tasks {
-  padding-left: 16px;
 }
 </style>
