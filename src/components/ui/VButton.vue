@@ -17,9 +17,9 @@ const props = defineProps({
 
 const emit = defineEmits(['click']);
 
-const onClick = ($event) => {
+const onClick = (event: MouseEvent) => {
   if (!props.disabled) {
-    emit('click', $event);
+    emit('click', event);
   }
 };
 </script>
