@@ -19,7 +19,7 @@ import { useNotesStore } from '@/stores/notes';
 import LinkHome from '@/components/links/LinkHome.vue';
 
 const toHome = () => {
-  router.push({ name: 'home' });
+  router.push('/');
 };
 
 const addNote = (note: Note) => {
