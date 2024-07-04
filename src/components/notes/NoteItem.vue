@@ -17,7 +17,7 @@
     </ul>
     <Actions>
       <VLink :link="`/edit/${noteId}`">Редактировать</VLink>
-      <Button @click="remove">Удалить</Button>
+      <ButtonDelete :note-id="noteId" />
     </Actions>
   </div>
 </template>
@@ -26,13 +26,11 @@
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 
-import { useNotesStore } from '@/stores/notes';
-
 import Actions from '@/components/ui/VActions.vue';
-import Button from '@/components/ui/VButton.vue';
 import VLink from '@/components/ui/VLink.vue';
 
 import { sortByDate } from '@/utils/notes';
+import ButtonDelete from '@/components/buttons/ButtonDelete.vue';
 
 interface Props {
   note: Note;
@@ -41,12 +39,6 @@ interface Props {
 const TASKS_COUNT_SHOWN = 3;
 
 const props = defineProps<Props>();
-
-const notesStore = useNotesStore();
-
-const remove = () => {
-  notesStore.remove(props.note.id);
-};
 
 const noteId = computed(() => props.note.id);
 
