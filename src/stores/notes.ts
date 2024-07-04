@@ -20,10 +20,11 @@ export const useNotesStore = defineStore('notes', () => {
     return Math.max(...ids) + 1;
   };
 
-  const add = (note: Note) => {
-    if (note.id && note.title) {
-      notes.push(note);
-    }
+  const add = (note: NoteNew) => {
+    notes.push({
+      ...note,
+      id: getNewNoteId(),
+    });
   };
 
   const remove = (noteId: number) => {
@@ -47,7 +48,6 @@ export const useNotesStore = defineStore('notes', () => {
   return {
     notes,
     init,
-    getNewNoteId,
     add,
     remove,
     edit,

@@ -35,8 +35,6 @@ import { cloneDeep } from 'lodash';
 
 import { reactive, ref, watch } from 'vue';
 
-import { useNotesStore } from '@/stores/notes';
-
 import Form from '@/components/ui/form/VForm.vue';
 import Input from '@/components/ui/inputs/VInput.vue';
 import Button from '@/components/ui/VButton.vue';
@@ -47,10 +45,8 @@ import { getDate } from '@/utils/date';
 import { getEmptyNote, getEmptyTask, getNotEmptyTasks, getTasksDefault } from './utils';
 
 interface Props {
-  note?: Note;
+  note?: Note | NoteNew;
 }
-
-const notesStore = useNotesStore();
 
 const props = withDefaults(defineProps<Props>(), {
   note: getEmptyNote(),
@@ -83,12 +79,15 @@ const save = () => {
   if (!titleNew) {
     alert('Заполните заголовок заметки');
   } else {
-    const noteNew: Note = {
-      id: props.note.id || notesStore.getNewNoteId(),
+    const noteNew: NoteNew | Note = {
       title: title.value,
       tasks: getNotEmptyTasks(tasks),
       createdAt: props.note.createdAt || getDate(),
     };
+
+    if (props.note.id) {
+      noteNew.id = props.note.id;
+    }
 
     emit('save', noteNew);
   }

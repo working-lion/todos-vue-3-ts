@@ -4,9 +4,13 @@ interface Task {
   done: boolean;
 }
 
-interface Note {
-  id: number;
+interface NoteNew {
   title: string;
-  tasks?: Array<Task>;
+  tasks: Array<Task>;
   createdAt: string;
+}
+
+interface Note extends NoteNew {
+  id: number;
+  tasks?: Array<Task>;
 }

@@ -22,10 +22,8 @@ const toHome = () => {
   router.go(-1);
 };
 
-const addNote = (note: Note) => {
+const addNote = (note: NoteNew) => {
   const notesStore = useNotesStore();
-
-  // TODO: валидация
 
   notesStore.add(note);
 

@@ -18,9 +18,8 @@ export function getTasksDefault() {
   return tasksDefault;
 }
 
-export function getEmptyNote(): Note {
+export function getEmptyNote(): NoteNew {
   return {
-    id: 0,
     title: '',
     tasks: getTasksDefault(),
     createdAt: '',
