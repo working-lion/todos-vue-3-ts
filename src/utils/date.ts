@@ -1,3 +1,3 @@
 export function getDate(): string {
-  return new Date().toDateString();
+  return new Date().toString();
 }
