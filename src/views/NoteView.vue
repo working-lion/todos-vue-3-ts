@@ -68,15 +68,13 @@ const notesStore = useNotesStore();
 // Копируем заметку
 const note: Note | undefined = cloneDeep(notesStore.notes.find((n) => n.id === noteId));
 const isFound = isNoteCorrect(note);
-const initialTasks = note?.tasks?.filter((t) => !t.done).sort(sortTasksByDone) || [];
+const initialTasks = note?.tasks?.sort(sortTasksByDone) || [];
 
 // Доп. переменная нужна, чтобы не аффектить стор
 const tasks = reactive(initialTasks);
 
 watch(tasks, () => {
   if (isFound && note?.id) {
-    tasks.sort(sortTasksByDone);
-
     const noteEdited: Note = {
       ...note,
       tasks: cloneDeep(tasks).sort(sortByDate),
