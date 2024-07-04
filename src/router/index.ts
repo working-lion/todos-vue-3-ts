@@ -15,7 +15,7 @@ const router = createRouter({
       component: () => import('@/views/AddView.vue'),
     },
     {
-      path: '/view',
+      path: '/note/:id',
       name: 'note-view',
       component: () => import('@/views/NoteView.vue'),
     },
@@ -27,7 +27,7 @@ const router = createRouter({
     {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
-      component: () => import('@/views/NotFound.vue'),
+      component: () => import('@/views/NotFoundView.vue'),
     },
   ],
 });
