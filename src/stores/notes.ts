@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia';
-import { reactive, ref, watch } from 'vue';
+import { reactive, watch } from 'vue';
 
 import { saveToStorage } from '@/localStorage/localStorage';
 
 export const useNotesStore = defineStore('notes', () => {
-  const count = ref(0);
   const notes: Array<Note> = reactive([]);
 
   watch(notes, () => {
@@ -12,13 +11,16 @@ export const useNotesStore = defineStore('notes', () => {
   });
 
   const getNewNoteId = () => {
-    count.value += 1;
+    if (notes.length === 0) {
+      return 1;
+    }
 
-    return count.value;
+    const ids = notes.map((n) => n.id);
+
+    return Math.max(...ids) + 1;
   };
 
   const add = (note: Note) => {
-    // TODO: проставление id было бы правильнее делать тут
     if (note.id && note.title) {
       notes.push(note);
     }

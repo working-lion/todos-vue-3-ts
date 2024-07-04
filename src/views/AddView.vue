@@ -4,22 +4,22 @@
     <LinkHome />
   </teleport>
 
-  <AddNoteForm
-    @add="addNote"
-    @chancel="toHome"
+  <EditNoteForm
+    @save="addNote"
+    @chancel="chancel"
   />
 </template>
 
 <script setup lang="ts">
 import router from '@/router';
 
-import AddNoteForm from '@/components/forms/AddNoteForm.vue';
+import EditNoteForm from '@/components/forms/EditNoteForm.vue';
 
 import { useNotesStore } from '@/stores/notes';
 import LinkHome from '@/components/links/LinkHome.vue';
 
 const toHome = () => {
-  router.push('/');
+  router.go(-1);
 };
 
 const addNote = (note: Note) => {
@@ -31,4 +31,12 @@ const addNote = (note: Note) => {
 
   toHome();
 };
+
+function chancel() {
+  const confirmed = confirm('Данные о заметке не будут сохранены');
+
+  if (confirmed) {
+    toHome();
+  }
+}
 </script>

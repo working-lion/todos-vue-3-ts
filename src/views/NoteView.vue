@@ -44,6 +44,8 @@
 </template>
 
 <script setup lang="ts">
+import { cloneDeep } from 'lodash';
+
 import { reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -57,15 +59,12 @@ import { isNoteCorrect, sortByDate, sortTasksByDone } from '@/utils/notes';
 import LinkEdit from '@/components/links/LinkEdit.vue';
 import ButtonDelete from '@/components/buttons/ButtonDelete.vue';
 
-import { cloneDeep } from 'lodash';
-
 const route = useRoute();
 
 const noteId = Number(route.params.id);
 
 const notesStore = useNotesStore();
 
-// Копируем заметку
 const note: Note | undefined = cloneDeep(notesStore.notes.find((n) => n.id === noteId));
 const isFound = isNoteCorrect(note);
 const initialTasks = note?.tasks?.sort(sortTasksByDone) || [];

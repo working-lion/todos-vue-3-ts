@@ -23,7 +23,7 @@
       </div>
 
       <Actions>
-        <Button @click="add">Сохранить</Button>
+        <Button @click="save">Сохранить</Button>
         <Button @click="chancel">Отменить</Button>
       </Actions>
     </Form>
@@ -31,6 +31,8 @@
 </template>
 
 <script setup lang="ts">
+import { cloneDeep } from 'lodash';
+
 import { reactive, ref, watch } from 'vue';
 
 import { useNotesStore } from '@/stores/notes';
@@ -42,58 +44,54 @@ import Actions from '@/components/ui/VActions.vue';
 import TaskEdit from '@/components/TaskEdit.vue';
 
 import { getDate } from '@/utils/date';
+import { getEmptyNote, getEmptyTask, getNotEmptyTasks, getTasksDefault } from './utils';
 
-const TASKS_COUNT_DEFAULT = 3;
-
-const emit = defineEmits(['add', 'chancel']);
+interface Props {
+  note?: Note;
+}
 
 const notesStore = useNotesStore();
 
-const title = ref('');
-
-const getEmptyTask = () => {
-  return {
-    title: '',
-    done: false,
-    createdAt: '',
-  };
-};
-
-const getTasksDefault = () => {
-  const tasksDefault = [];
-
-  for (let i = 0; i < TASKS_COUNT_DEFAULT; i++) {
-    tasksDefault.push(getEmptyTask());
-  }
-
-  return tasksDefault;
-};
-
-const tasks = reactive(getTasksDefault());
-
-const getNotEmptyTasks = (tasks: Array<Task>) => {
-  return tasks.filter((t) => Boolean(t.title));
-};
-
-watch(tasks, () => {
-  const allTasksFilled = tasks.every((t) => Boolean(t.title));
-
-  if (allTasksFilled) {
-    const emptyTask = getEmptyTask();
-
-    tasks.push(emptyTask);
-  }
+const props = withDefaults(defineProps<Props>(), {
+  note: getEmptyNote(),
 });
 
-const add = () => {
-  const noteNew: Note = {
-    id: notesStore.getNewNoteId(),
-    title: title.value,
-    tasks: getNotEmptyTasks(tasks),
-    createdAt: getDate(),
-  };
+const emit = defineEmits(['save', 'chancel']);
 
-  emit('add', noteNew);
+const title = ref(props.note.title);
+
+const initialTasks = props.note.tasks?.length ? cloneDeep(props.note.tasks) : getTasksDefault();
+const tasks = reactive(initialTasks);
+
+watch(
+  tasks,
+  () => {
+    const allTasksFilled = tasks.every((t) => Boolean(t.title));
+
+    if (allTasksFilled) {
+      const emptyTask = getEmptyTask();
+
+      tasks.push(emptyTask);
+    }
+  },
+  { immediate: true },
+);
+
+const save = () => {
+  const titleNew = title.value;
+
+  if (!titleNew) {
+    alert('Заполните заголовок заметки');
+  } else {
+    const noteNew: Note = {
+      id: props.note.id || notesStore.getNewNoteId(),
+      title: title.value,
+      tasks: getNotEmptyTasks(tasks),
+      createdAt: props.note.createdAt || getDate(),
+    };
+
+    emit('save', noteNew);
+  }
 };
 
 const chancel = () => {

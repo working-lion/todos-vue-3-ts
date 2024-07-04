@@ -2,6 +2,7 @@
   <RouterLink
     class="v-link"
     :to="link"
+    :title="title"
     ><slot
   /></RouterLink>
 </template>
@@ -11,6 +12,7 @@ import { RouterLink } from 'vue-router';
 
 interface Pros {
   link: string;
+  title?: string;
 }
 
 defineProps<Pros>();

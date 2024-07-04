@@ -1,5 +1,5 @@
 <template>
-  <VLink :link>Редактировать</VLink>
+  <VLink :link="link">Редактировать</VLink>
 </template>
 
 <script setup lang="ts">
@@ -8,5 +8,5 @@ import { computed } from 'vue';
 
 const props = defineProps<{ noteId: number }>();
 
-const link = computed(() => `/note/${props.noteId}`);
+const link = computed(() => `/edit/${props.noteId}`);
 </script>

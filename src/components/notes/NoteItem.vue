@@ -3,6 +3,7 @@
     <RouterLink
       class="note-item__title"
       :to="`/note/${noteId}`"
+      title="Подробнее"
       >{{ note.title }}</RouterLink
     >
     <ul class="note-item__tasks">
@@ -11,12 +12,12 @@
         v-for="task in tasks"
         :key="task.createdAt"
       >
-        {{ task.title }} - {{ task.createdAt }}
+        {{ task.title }}
       </li>
       <li v-if="isMore">...</li>
     </ul>
     <Actions>
-      <VLink :link="`/edit/${noteId}`">Редактировать</VLink>
+      <LinkEdit :note-id="noteId" />
       <ButtonDelete :note-id="noteId" />
     </Actions>
   </div>
@@ -27,10 +28,10 @@ import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 
 import Actions from '@/components/ui/VActions.vue';
-import VLink from '@/components/ui/VLink.vue';
 
 import { sortByDate } from '@/utils/notes';
 import ButtonDelete from '@/components/buttons/ButtonDelete.vue';
+import LinkEdit from '@/components/links/LinkEdit.vue';
 
 interface Props {
   note: Note;

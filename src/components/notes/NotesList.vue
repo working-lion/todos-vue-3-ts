@@ -25,6 +25,7 @@ import { computed } from 'vue';
 import NoteItem from '@/components/notes/NoteItem.vue';
 
 import { sortByDate } from '@/utils/notes';
+import { cloneDeep } from 'lodash';
 
 const props = defineProps<{
   notes: Array<Note>;
@@ -35,9 +36,8 @@ const isEmpty = computed(() => {
 });
 
 const notes = computed(() => {
-  console.log(props.notes);
   // Сортировка значения свойства создаёт сайдэффект
-  const notesClone = [...props.notes];
+  const notesClone = cloneDeep(props.notes);
 
   return notesClone.sort(sortByDate);
 });
