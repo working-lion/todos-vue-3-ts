@@ -9,9 +9,7 @@
     class="note-view"
     v-if="isFound"
   >
-    Страница просмотра заметки #{{ noteId }}
-
-    <div class="note-view__note-title">title {{ note?.title }}</div>
+    <div class="note-view__note-title">{{ note?.title }}</div>
 
     <ul>
       <li
@@ -38,11 +36,15 @@
 
   <VActions>
     <LinkHome />
+    <template v-if="isFound">
+      <LinkEdit :note-id="noteId" />
+      <ButtonDelete :note-id="noteId"></ButtonDelete>
+    </template>
   </VActions>
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useNotesStore } from '@/stores/notes';
@@ -51,7 +53,11 @@ import VActions from '@/components/ui/VActions.vue';
 import LinkHome from '@/components/links/LinkHome.vue';
 import VCheckbox from '@/components/ui/inputs/VCheckbox.vue';
 
-import { isNoteCorrect, sortTasksByDone } from '@/utils/notes';
+import { isNoteCorrect, sortByDate, sortTasksByDone } from '@/utils/notes';
+import LinkEdit from '@/components/links/LinkEdit.vue';
+import ButtonDelete from '@/components/buttons/ButtonDelete.vue';
+
+import { cloneDeep } from 'lodash';
 
 const route = useRoute();
 
@@ -60,18 +66,23 @@ const noteId = Number(route.params.id);
 const notesStore = useNotesStore();
 
 // Копируем заметку
-const note: Note | undefined = notesStore.notes.find((n) => n.id === noteId);
-
+const note: Note | undefined = cloneDeep(notesStore.notes.find((n) => n.id === noteId));
 const isFound = isNoteCorrect(note);
+const initialTasks = note?.tasks?.filter((t) => !t.done).sort(sortTasksByDone) || [];
 
-const tasks = computed(() => {
-  return note?.tasks?.sort(sortTasksByDone);
-});
+// Доп. переменная нужна, чтобы не аффектить стор
+const tasks = reactive(initialTasks);
 
-// TODO: завершённые задачи должны быть ниже незавершённых
 watch(tasks, () => {
-  if (note) {
-    // notesStore.edit(note);
+  if (isFound && note?.id) {
+    tasks.sort(sortTasksByDone);
+
+    const noteEdited: Note = {
+      ...note,
+      tasks: cloneDeep(tasks).sort(sortByDate),
+    };
+
+    notesStore.edit(noteEdited);
   }
 });
 </script>
