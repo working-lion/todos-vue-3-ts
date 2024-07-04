@@ -4,7 +4,7 @@
     type="checkbox"
     v-model="checked"
   />
-  <label :for="id"></label>
+  <label :for="id">{{ label }}</label>
 </template>
 
 <script setup lang="ts">
@@ -32,3 +32,10 @@ const onChange = (checked: boolean) => {
 
 watch(checked, onChange);
 </script>
+
+<style>
+label {
+  margin-left: 10px;
+  cursor: pointer;
+}
+</style>
