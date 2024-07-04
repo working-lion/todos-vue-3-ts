@@ -9,4 +9,8 @@
 
 <script setup lang="ts">
 // TODO: накрутить валидацию
+const MESSAGES_DEFAULT = {
+  required: 'Обязательное поле',
+  minLength: 'Минимальная длина поля {n}',
+};
 </script>

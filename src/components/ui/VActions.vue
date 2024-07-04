@@ -6,7 +6,7 @@
 
 <style>
 .actions {
-  margin-top: 25px;
+  margin: 25px 0;
   display: flex;
   gap: 10px;
 }
