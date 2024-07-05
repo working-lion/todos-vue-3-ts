@@ -34,12 +34,9 @@
     <div class="note-view--empty__title">Заметка с id = {{ noteId }} не найдена</div>
   </div>
 
-  <VActions>
-    <LinkHome is-button />
-    <template v-if="isFound">
-      <LinkEdit :note-id="noteId" />
-      <ButtonDelete :note-id="noteId"></ButtonDelete>
-    </template>
+  <VActions v-if="isFound">
+    <LinkEdit :note-id="noteId" />
+    <ButtonDelete :note-id="noteId"></ButtonDelete>
   </VActions>
 </template>
 
