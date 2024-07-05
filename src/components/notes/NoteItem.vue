@@ -1,24 +1,26 @@
 <template>
   <div class="note-item">
-    <RouterLink
-      class="note-item__title"
-      :to="`/note/${noteId}`"
-      title="Подробнее"
-      >{{ note.title }}</RouterLink
-    >
-    <ul
-      class="note-item__tasks"
-      v-if="tasks?.length"
-    >
-      <li
-        class="note-item__task"
-        v-for="task in tasks"
-        :key="task.createdAt"
+    <div class="note-item-content">
+      <RouterLink
+        class="note-item__title"
+        :to="`/note/${noteId}`"
+        title="Подробнее"
+        >{{ note.title }}</RouterLink
       >
-        {{ task.title }}
-      </li>
-      <li v-if="isMore">...</li>
-    </ul>
+      <ul
+        class="note-item__tasks"
+        v-if="tasks?.length"
+      >
+        <li
+          class="note-item__task"
+          v-for="task in tasks"
+          :key="task.createdAt"
+        >
+          {{ task.title }}
+        </li>
+        <li v-if="isMore">...</li>
+      </ul>
+    </div>
     <Actions class="note-item-actions">
       <LinkEdit :note-id="noteId" />
       <ButtonDelete :note-id="noteId" />
@@ -67,6 +69,12 @@ const isMore = computed(() => {
   padding: 10px;
   border: 1px solid wheat;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.note-item-content {
+  flex: 1 1;
 }
 
 .note-item__title {
