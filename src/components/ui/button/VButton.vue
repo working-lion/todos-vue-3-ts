@@ -12,9 +12,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+import { BUTTON_COLORS } from '@/types/enums';
+
 interface Props {
   disabled?: boolean;
-  color?: ButtonColor;
+  color?: BUTTON_COLORS;
 }
 
 const props = withDefaults(defineProps<Props>(), {

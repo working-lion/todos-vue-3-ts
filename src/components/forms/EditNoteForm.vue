@@ -26,12 +26,12 @@
       <Actions>
         <Button
           @click="save"
-          :color="'green'"
+          :color="BUTTON_COLORS.GREEN"
           >Сохранить</Button
         >
         <Button
           @click="chancel"
-          :color="'red'"
+          :color="BUTTON_COLORS.RED"
           >Отменить</Button
         >
       </Actions>
@@ -53,6 +53,8 @@ import TaskEdit from '@/components/TaskEdit.vue';
 import { getDate } from '@/utils/date';
 import { getEmptyNote, getEmptyTask, getNotEmptyTasks, getTasksDefault } from './utils';
 import { sortByDate } from '@/utils/notes';
+
+import { BUTTON_COLORS } from '@/types/enums';
 
 interface Props {
   note?: Note | NoteNew;

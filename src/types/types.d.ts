@@ -14,10 +14,3 @@ interface Note extends NoteNew {
   id: number;
   tasks?: Array<Task>;
 }
-
-declare enum ButtonColor {
-  RED = 'red',
-  GREEN = 'green',
-  GRAY = 'gray',
-  BEIGE = 'beige,',
-}

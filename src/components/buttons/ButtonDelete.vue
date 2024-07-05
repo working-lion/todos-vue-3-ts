@@ -1,6 +1,6 @@
 <template>
   <VButton
-    :color="COLOR_RED"
+    :color="BUTTON_COLORS.RED"
     @click="remove"
     >Удалить</VButton
   >
@@ -12,14 +12,14 @@ import { useNotesStore } from '@/stores/notes';
 
 import VButton from '@/components/ui/button/VButton.vue';
 
+import { BUTTON_COLORS } from '@/types/enums';
+
 interface Props {
   noteId: number;
   toHome?: boolean;
 }
 
 const notesStore = useNotesStore();
-
-const COLOR_RED = 'red';
 
 const props = withDefaults(defineProps<Props>(), {
   toHome: true,

@@ -9,15 +9,16 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 
-import { computed } from 'vue';
+import { BUTTON_COLORS } from '@/types/enums';
 
 interface Pros {
   link: string;
   title?: string;
   isButton?: boolean;
-  color?: ButtonColor;
+  color?: BUTTON_COLORS;
 }
 
 const props = withDefaults(defineProps<Pros>(), {
