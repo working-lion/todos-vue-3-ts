@@ -6,7 +6,7 @@
 
   <EditNoteForm
     @save="addNote"
-    @chancel="chancel"
+    @chancel="toHome"
   />
 </template>
 
@@ -29,12 +29,4 @@ const addNote = (note: NoteNew) => {
 
   toHome();
 };
-
-function chancel() {
-  const confirmed = confirm('Данные о заметке не будут сохранены');
-
-  if (confirmed) {
-    toHome();
-  }
-}
 </script>
