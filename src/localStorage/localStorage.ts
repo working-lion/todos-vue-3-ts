@@ -6,12 +6,13 @@ export function saveToStorage(notes: Array<Note>) {
 
 export function getFromStorage() {
   const notesRaw = localStorage.getItem(NAME) || '';
+  let notes: Array<Note> = [];
 
   try {
-    const notes: Array<Note> = JSON.parse(notesRaw);
-
-    return notes;
+    notes = JSON.parse(notesRaw) || [];
   } catch (e) {
-    return [];
+    console.error('Ошибка получения данных о заметках');
   }
+
+  return notes;
 }
