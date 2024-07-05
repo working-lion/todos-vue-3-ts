@@ -3,7 +3,7 @@
     <label
       class="input__label"
       :for="id"
-      >{{ label }}</label
+      >{{ label }}<template v-if="required"> *</template></label
     >
     <input
       :id="id"
@@ -19,6 +19,7 @@
 <script setup lang="ts">
 interface Props {
   modelValue?: string | number;
+  required?: boolean;
   id: string;
   label?: string;
   placeholder?: string;
@@ -26,6 +27,7 @@ interface Props {
 
 withDefaults(defineProps<Props>(), {
   modelValue: '',
+  required: false,
   id: '',
   label: '',
   placeholder: '',
