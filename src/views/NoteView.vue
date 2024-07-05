@@ -35,7 +35,7 @@
   </div>
 
   <VActions>
-    <LinkHome />
+    <LinkHome is-button />
     <template v-if="isFound">
       <LinkEdit :note-id="noteId" />
       <ButtonDelete :note-id="noteId"></ButtonDelete>
@@ -85,6 +85,17 @@ watch(tasks, () => {
 </script>
 
 <style>
+.note-view__note-title {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.note-view__task {
+  font-size: 16px;
+  list-style-type: none;
+  margin-bottom: 5px;
+}
+
 .note-view__task--done label {
   text-decoration: line-through;
 }

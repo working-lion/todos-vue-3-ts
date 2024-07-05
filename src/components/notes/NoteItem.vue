@@ -6,7 +6,10 @@
       title="Подробнее"
       >{{ note.title }}</RouterLink
     >
-    <ul class="note-item__tasks">
+    <ul
+      class="note-item__tasks"
+      v-if="tasks?.length"
+    >
       <li
         class="note-item__task"
         v-for="task in tasks"
@@ -16,7 +19,7 @@
       </li>
       <li v-if="isMore">...</li>
     </ul>
-    <Actions>
+    <Actions class="note-item-actions">
       <LinkEdit :note-id="noteId" />
       <ButtonDelete :note-id="noteId" />
     </Actions>
@@ -67,6 +70,16 @@ const isMore = computed(() => {
 }
 
 .note-item__title {
+  font-size: 18px;
   margin-bottom: 16px;
+  text-decoration: none;
+}
+
+.note-item__title:hover {
+  text-decoration: underline;
+}
+
+.note-item-actions {
+  margin-bottom: 0;
 }
 </style>

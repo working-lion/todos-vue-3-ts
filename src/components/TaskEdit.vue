@@ -1,10 +1,11 @@
 <template>
-  <div class="task">
+  <div class="task-edit-wrap">
     <Checkbox
       :id="`task-checkbox-${id}`"
       v-model="done"
     />
     <Input
+      class="task-edit__input"
       :id="`task-input-${id}`"
       v-model="title"
     />
@@ -49,8 +50,12 @@ watch(done, (doneNew) => {
 </script>
 
 <style>
-.task {
+.task-edit-wrap {
   display: flex;
-  flex-direction: row;
+}
+
+.task-edit__input {
+  margin-left: 10px;
+  width: 500px;
 }
 </style>

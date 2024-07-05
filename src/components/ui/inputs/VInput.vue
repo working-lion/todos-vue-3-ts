@@ -47,10 +47,9 @@ const onInput = (event: Event) => {
 }
 
 .input {
-  height: 25px;
   border-radius: 8px;
   outline: none;
-  padding: 0 7px;
+  padding: 5px 10px;
   font-size: 16px;
   color: gray;
 }

@@ -3,8 +3,13 @@
     :id="id"
     type="checkbox"
     v-model="checked"
+    class="checkbox"
   />
-  <label :for="id">{{ label }}</label>
+  <label
+    :for="id"
+    v-if="label"
+    >{{ label }}</label
+  >
 </template>
 
 <script setup lang="ts">
@@ -34,6 +39,10 @@ watch(checked, onChange);
 </script>
 
 <style>
+.checkbox {
+  cursor: pointer;
+}
+
 label {
   margin-left: 10px;
   cursor: pointer;

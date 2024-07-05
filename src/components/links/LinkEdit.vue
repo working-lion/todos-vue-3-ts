@@ -1,5 +1,10 @@
 <template>
-  <VLink :link="link">Редактировать</VLink>
+  <VLink
+    :link="link"
+    is-button
+    :color="'beige'"
+    >Редактировать</VLink
+  >
 </template>
 
 <script setup lang="ts">

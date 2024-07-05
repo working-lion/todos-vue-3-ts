@@ -1,12 +1,16 @@
 <template>
-  <VButton @click="remove">Удалить</VButton>
+  <VButton
+    :color="COLOR_RED"
+    @click="remove"
+    >Удалить</VButton
+  >
 </template>
 
 <script setup lang="ts">
 import router from '@/router';
 import { useNotesStore } from '@/stores/notes';
 
-import VButton from '@/components/ui/VButton.vue';
+import VButton from '@/components/ui/button/VButton.vue';
 
 interface Props {
   noteId: number;
@@ -15,11 +19,19 @@ interface Props {
 
 const notesStore = useNotesStore();
 
+const COLOR_RED = 'red';
+
 const props = withDefaults(defineProps<Props>(), {
   toHome: true,
 });
 
 const remove = () => {
+  const confirmed = confirm('Заметка будет удалена. Продолжить?');
+
+  if (!confirmed) {
+    return;
+  }
+
   notesStore.remove(props.noteId);
 
   if (props.toHome) {

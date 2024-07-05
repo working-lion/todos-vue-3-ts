@@ -13,6 +13,7 @@
         <TaskEdit
           v-for="(task, i) in tasks"
           :key="i"
+          class="add-note-form__task"
           :id="`task-${i}`"
           :createdAt="task.createdAt"
           v-model:title="task.title"
@@ -23,8 +24,16 @@
       </div>
 
       <Actions>
-        <Button @click="save">Сохранить</Button>
-        <Button @click="chancel">Отменить</Button>
+        <Button
+          @click="save"
+          :color="'green'"
+          >Сохранить</Button
+        >
+        <Button
+          @click="chancel"
+          :color="'red'"
+          >Отменить</Button
+        >
       </Actions>
     </Form>
   </div>
@@ -37,7 +46,7 @@ import { reactive, ref, watch } from 'vue';
 
 import Form from '@/components/ui/form/VForm.vue';
 import Input from '@/components/ui/inputs/VInput.vue';
-import Button from '@/components/ui/VButton.vue';
+import Button from '@/components/ui/button/VButton.vue';
 import Actions from '@/components/ui/VActions.vue';
 import TaskEdit from '@/components/TaskEdit.vue';
 
@@ -107,5 +116,9 @@ const updateCreatedAt = (createdAtNew: string, task: Task) => {
 <style>
 .add-note-form__title {
   margin-bottom: 20px;
+}
+
+.add-note-form__task {
+  margin-bottom: 5px;
 }
 </style>
