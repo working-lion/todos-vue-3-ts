@@ -52,6 +52,7 @@ import TaskEdit from '@/components/TaskEdit.vue';
 
 import { getDate } from '@/utils/date';
 import { getEmptyNote, getEmptyTask, getNotEmptyTasks, getTasksDefault } from './utils';
+import { sortByDate } from '@/utils/notes';
 
 interface Props {
   note?: Note | NoteNew;
@@ -90,7 +91,7 @@ const save = () => {
   } else {
     const noteNew: NoteNew | Note = {
       title: title.value,
-      tasks: getNotEmptyTasks(tasks),
+      tasks: getNotEmptyTasks(tasks).sort(sortByDate),
       createdAt: props.note.createdAt || getDate(),
     };
 
@@ -103,6 +104,12 @@ const save = () => {
 };
 
 const chancel = () => {
+  const confirmed = confirm('Изменения не будут сохранены. Продолжить?');
+
+  if (!confirmed) {
+    return;
+  }
+
   emit('chancel');
 };
 
