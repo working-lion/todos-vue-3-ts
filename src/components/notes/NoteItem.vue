@@ -78,6 +78,7 @@ const isMore = computed(() => {
 }
 
 .note-item__title {
+  display: block;
   font-size: 18px;
   margin-bottom: 16px;
   text-decoration: none;
@@ -89,5 +90,9 @@ const isMore = computed(() => {
 
 .note-item-actions {
   margin-bottom: 0;
+}
+
+.note-item__task {
+  margin-bottom: 5px;
 }
 </style>
